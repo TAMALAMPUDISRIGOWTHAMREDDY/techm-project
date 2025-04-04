@@ -30,12 +30,26 @@ foodreviewprojecttechm/
    ```
 
 2. Update the database connection string in `appsettings.json`:
-   ```json
+   ```
    {
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=YOUR_SERVER;Database=FoodReviewDB;Trusted_Connection=True;MultipleActiveResultSets=true"
-     }
-   }
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=yourdatabase name;User=root;Password=your password;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Key": "your-super-secret-key-with-at-least-32-characters",
+    "Issuer": "http://localhost:5128",
+    "Audience": "http://localhost:5128"
+  }
+}
+
+  
    ```
 
 3. Open the solution in Visual Studio or run the following commands:
