@@ -1,0 +1,199 @@
+<div class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));">
+  <div class="container">
+    <h1>Discover Great Food</h1>
+    <p class="lead">Find and review the best restaurants in your area</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="features-section">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-star-fill"></i>
+          <h3>Rate & Review</h3>
+          <p>Share your dining experiences and help others find great places to eat.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-search"></i>
+          <h3>Find Restaurants</h3>
+          <p>Discover new restaurants based on cuisine, price range, and location.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-people-fill"></i>
+          <h3>Join the Community</h3>
+          <p>Connect with other food enthusiasts and share your passion for great food.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="featured-restaurants mb-5">
+  <div class="container">
+    <h2 class="section-title">Featured Restaurants</h2>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let restaurant of featuredRestaurants">
+        <div class="card h-100 hover-card">
+          <div class="restaurant-image-container" style="height: 250px; overflow: hidden;">
+            <img [src]="restaurant.imageUrl" 
+                 class="card-img-top" 
+                 [alt]="restaurant.name"
+                 (error)="handleImageError($event)"
+                 style="object-fit: cover; height: 100%; width: 100%;">
+            <div class="featured-badge">
+              <i class="fas fa-star me-1"></i> Featured
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{restaurant.name}}</h5>
+            <div class="rating mb-2">
+              <i class="fas fa-star" 
+                 [class.text-warning]="i < restaurant.averageRating" 
+                 [class.text-muted]="i >= restaurant.averageRating"
+                 *ngFor="let i of [0,1,2,3,4]"></i>
+              <span class="ms-2">{{restaurant.averageRating.toFixed(1)}} ({{restaurant.reviewCount}} reviews)</span>
+            </div>
+            <p class="card-text text-muted">{{restaurant.description}}</p>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span class="badge bg-primary">
+                <i class="fas fa-utensils me-1"></i>
+                {{restaurant.cuisineType}}
+              </span>
+              <span class="badge bg-info">
+                <i class="fas fa-dollar-sign me-1"></i>
+                {{getPriceRangeLabel(restaurant.priceRange)}}
+              </span>
+            </div>
+            <div class="small text-muted mb-3">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              {{restaurant.address}}
+            </div>
+            <button class="btn btn-primary w-100" (click)="viewRestaurantDetails(restaurant.id)">
+              <i class="fas fa-eye me-2"></i>View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trending-dishes mb-5">
+  <h2 class="section-title">Trending Dishes</h2>
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let dish of trendingDishes">
+      <div class="card h-100 hover-card">
+        <img [src]="dish.image" class="card-img-top" [alt]="dish.name" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{dish.name}}</h5>
+          <p class="card-text">{{dish.restaurant}}</p>
+          <div class="rating mb-2">
+            <i class="fas fa-star" [class.text-warning]="i < dish.rating" [class.text-muted]="i >= dish.rating"
+              *ngFor="let i of [0,1,2,3,4]"></i>
+            <span class="ms-2">{{dish.rating.toFixed(1)}} ({{dish.reviewCount}} reviews)</span>
+          </div>
+          <p class="card-text small text-muted">{{dish.description}}</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" (click)="openReviewModal(dish)">
+              <i class="fas fa-star me-2"></i>Write Review
+            </button>
+            <button class="btn btn-outline-primary" (click)="viewReviews(dish)">
+              <i class="fas fa-comments me-2"></i>View Reviews
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal" [class.show]="selectedDish" [style.display]="selectedDish ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="!showReviews">Review {{selectedDish?.name}}</h5>
+        <h5 class="modal-title" *ngIf="showReviews">Reviews for {{selectedDish?.name}}</h5>
+        <button type="button" class="btn-close" (click)="closeReviewModal()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Write Review Form -->
+        <div *ngIf="!showReviews">
+          <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <div class="rating-input">
+              <i class="fas fa-star fa-lg me-2" 
+                 *ngFor="let star of [1,2,3,4,5]"
+                 [class.text-warning]="star <= newReview.rating"
+                 [class.text-muted]="star > newReview.rating"
+                 (click)="newReview.rating = star"
+                 style="cursor: pointer;"></i>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="reviewComment" class="form-label">Your Review</label>
+            <textarea class="form-control" id="reviewComment" rows="3"
+                      [(ngModel)]="newReview.comment"
+                      placeholder="Share your experience with this dish..."></textarea>
+          </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div *ngIf="showReviews">
+          <div class="reviews-list">
+            <div *ngIf="selectedDishReviews.length === 0" class="text-center py-4">
+              <p class="text-muted">No reviews yet. Be the first to review this dish!</p>
+              <button class="btn btn-primary" (click)="showReviews = false">
+                <i class="fas fa-star me-2"></i>Write a Review
+              </button>
+            </div>
+            <div class="review-item card mb-3" *ngFor="let review of selectedDishReviews">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h6 class="mb-0">{{review.userName}}</h6>
+                    <div class="rating">
+                      <i class="fas fa-star" [class.text-warning]="i < review.rating" [class.text-muted]="i >= review.rating"
+                        *ngFor="let i of [0,1,2,3,4]"></i>
+                    </div>
+                  </div>
+                  <small class="text-muted">{{formatDate(review.createdAt)}}</small>
+                </div>
+                <p class="card-text">{{review.comment}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeReviewModal()">Close</button>
+        <button type="button" class="btn btn-primary" 
+                *ngIf="!showReviews"
+                [disabled]="!newReview.comment.trim()"
+                (click)="submitReview()">
+          Submit Review
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="selectedDish"></div>
+
+<div class="categories mb-5">
+  <h2 class="section-title">Popular Categories</h2>
+  <div class="row">
+    <div class="col-md-2 mb-3" *ngFor="let category of categories">
+      <div class="category-card text-center p-3">
+        <i [class]="category.icon"></i>
+        <h6 class="mt-2">{{category.name}}</h6>
+      </div>
+    </div>
+  </div>
+</div> 

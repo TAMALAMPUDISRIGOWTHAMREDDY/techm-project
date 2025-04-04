@@ -1,0 +1,472 @@
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.hero-section .search-box {
+  max-width: 600px;
+}
+
+.hero-section .search-box .input-group {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section .search-box .input-group input {
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+.hero-section .search-box .input-group button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #007bff;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card .card-img-wrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card .card-img-wrapper .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card .card-img-wrapper:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.card .card-img-wrapper .rating-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card .card-img-wrapper .rating-badge i {
+  color: #ffc107;
+}
+
+.card .card-body {
+  padding: 1.5rem;
+}
+
+.card .card-body .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.card .card-body .card-text {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.card .card-body .restaurant-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.card .card-body .restaurant-info .cuisine-type,
+.card .card-body .restaurant-info .price-range {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card .card-body .restaurant-info .cuisine-type i,
+.card .card-body .restaurant-info .price-range i {
+  color: #007bff;
+}
+
+.card .btn-primary {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.card .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.category-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.category-card i {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.category-card h6 {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  color: #333;
+}
+
+.features-section {
+  padding: 4rem 0;
+}
+
+.features-section .feature-card {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  transition: transform 0.3s ease;
+}
+
+.features-section .feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.features-section .feature-card i {
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.features-section .feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.features-section .feature-card p {
+  color: #6c757d;
+}
+
+.trending-dishes .card {
+  transition: transform 0.2s ease-in-out;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trending-dishes .hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.trending-dishes .card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.trending-dishes .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.trending-dishes .rating {
+  font-size: 0.9rem;
+}
+
+.trending-dishes .rating i {
+  cursor: default;
+}
+
+.rating-input i {
+  font-size: 1.5rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.rating-input i:hover {
+  transform: scale(1.1);
+}
+
+.modal-content {
+  border-radius: 12px;
+  border: none;
+}
+
+.modal-header {
+  border-bottom: 1px solid #eee;
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+}
+
+.btn-primary {
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #333;
+}
+
+textarea.form-control {
+  border-radius: 8px;
+  resize: none;
+}
+
+textarea.form-control:focus {
+  box-shadow: none;
+  border-color: #80bdff;
+}
+
+.reviews-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.review-item {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.review-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.review-item .rating {
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.review-item .card-text {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.modal-dialog.modal-lg {
+  max-width: 800px;
+}
+
+.d-grid.gap-2 {
+  margin-top: 1rem;
+}
+
+.d-grid.gap-2 .btn {
+  margin-bottom: 0.5rem;
+}
+
+.btn-outline-primary {
+  border-radius: 20px;
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+/* Custom scrollbar for reviews list */
+.reviews-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reviews-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Featured Restaurants */
+.featured-restaurants {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
+
+.featured-restaurants .section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.featured-restaurants .hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.featured-restaurants .hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.featured-restaurants .card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.featured-restaurants .restaurant-image-container {
+  position: relative;
+}
+
+.featured-restaurants .featured-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(255, 193, 7, 0.9);
+  color: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.featured-restaurants .rating {
+  font-size: 1.1rem;
+}
+
+.featured-restaurants .text-warning {
+  color: #ffc107 !important;
+}
+
+.featured-restaurants .badge {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.featured-restaurants .btn-primary {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.featured-restaurants .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Filter Styles */
+.form-control, .form-select {
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    margin-bottom: 1rem;
+  }
+} 

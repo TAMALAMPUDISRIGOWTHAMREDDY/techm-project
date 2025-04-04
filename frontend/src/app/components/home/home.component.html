@@ -1,0 +1,65 @@
+<div class="hero-section">
+  <div class="background-image">
+    <img src="assets/images/background1.jpeg" alt="background">
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-title">Discover Great Food</h1>
+    <p class="hero-subtitle">Find and review the best restaurants in your area</p>
+    
+    <div class="search-container">
+      <div class="dropdown-search">
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search for restaurants..."
+          [ngModel]="searchQuery"
+          (ngModelChange)="onSearchInput($event)"
+          (focus)="showDropdown = true"
+          (keyup.enter)="onSelectRestaurant(filteredRestaurants[0])"
+          autocomplete="off">
+        
+        <div class="dropdown-menu" *ngIf="showDropdown && filteredRestaurants.length > 0">
+          <div 
+            class="dropdown-item" 
+            *ngFor="let restaurant of filteredRestaurants"
+            (click)="onSelectRestaurant(restaurant)">
+            <div class="restaurant-preview">
+              <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="preview-image">
+              <div class="preview-details">
+                <div class="preview-name">{{restaurant.name}}</div>
+                <div class="preview-cuisine">{{restaurant.cuisineType}}</div>
+                <div class="preview-rating">
+                  <i class="bi bi-star-fill"></i>
+                  {{restaurant.averageRating}} ({{restaurant.reviewCount}} reviews)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="home-container">
+  <div class="restaurants-grid" *ngIf="!loading && !error">
+    <app-restaurant-card
+      *ngFor="let restaurant of restaurants"
+      [restaurant]="restaurant">
+    </app-restaurant-card>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading restaurants...</p>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    <p>{{ error }}</p>
+    <button (click)="loadRestaurants()">Try Again</button>
+  </div>
+
+  <div class="no-restaurants" *ngIf="!loading && !error && restaurants.length === 0">
+    <p>No restaurants found. Be the first to add one!</p>
+  </div>
+</div> 

@@ -1,0 +1,61 @@
+<header class="header">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/">Food Review</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/restaurants" routerLinkActive="active">Restaurants</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <ng-container *ngIf="!isLoggedIn">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="isLoggedIn">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle me-1"></i>
+                {{currentUser?.username || 'Profile'}}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li>
+                  <a class="dropdown-item" routerLink="/profile">
+                    <i class="bi bi-person me-2"></i>My Profile
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="/profile/reviews">
+                    <i class="bi bi-star me-2"></i>My Reviews
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="/profile/settings">
+                    <i class="bi bi-gear me-2"></i>Settings
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-danger" (click)="logout()" style="cursor: pointer;">
+                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header> 

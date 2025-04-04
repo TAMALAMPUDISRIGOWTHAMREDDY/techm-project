@@ -1,0 +1,127 @@
+<div class="page-wrapper">
+  <!-- Header -->
+  <header class="header">
+    <a href="/" class="logo">
+      <span class="logo-text">FoodReview</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/restaurants" class="nav-link">Restaurants</a>
+      <a href="/login" class="nav-link">Login</a>
+      <a href="/register" class="nav-link active">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="register-container">
+    <div class="register-image">
+      <img src="assets/images/signup.jpg" alt="Signup Background">
+    </div>
+    <div class="register-form-container">
+      <div class="register-form">
+        <h2>Create Account</h2>
+        <p class="subtitle">Join our community of food lovers</p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-group">
+              <i class="bi bi-person"></i>
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                placeholder="Choose a username"
+                [class.is-invalid]="username.invalid && (username.dirty || username.touched)"
+              >
+            </div>
+            <div class="error-message" *ngIf="username.invalid && (username.dirty || username.touched)">
+              <small *ngIf="username.errors?.['required']">Username is required</small>
+              <small *ngIf="username.errors?.['minlength']">Username must be at least 3 characters</small>
+              <small *ngIf="username.errors?.['maxlength']">Username cannot exceed 50 characters</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group">
+              <i class="bi bi-envelope"></i>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="Enter your email"
+                [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+              >
+            </div>
+            <div class="error-message" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <small *ngIf="email.errors?.['required']">Email is required</small>
+              <small *ngIf="email.errors?.['email']">Please enter a valid email</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <i class="bi bi-lock"></i>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                placeholder="Create a password"
+                [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+              >
+            </div>
+            <div class="error-message" *ngIf="password.invalid && (password.dirty || password.touched)">
+              <small *ngIf="password.errors?.['required']">Password is required</small>
+              <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</small>
+            </div>
+          </div>
+
+          <div class="terms-privacy">
+            By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </div>
+
+          <div class="error-alert" *ngIf="error">
+            {{ error }}
+          </div>
+
+          <button type="submit" [disabled]="registerForm.invalid || isSubmitting" class="register-button">
+            <span *ngIf="!isSubmitting">Create Account</span>
+            <div class="spinner" *ngIf="isSubmitting"></div>
+          </button>
+
+          <div class="login-link">
+            Already have an account? <a routerLink="/login">Log in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/about" class="footer-link">About Us</a>
+        <a href="/contact" class="footer-link">Contact</a>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <a href="/terms" class="footer-link">Terms of Service</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" class="social-link" title="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="#" class="social-link" title="Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-link" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+      <div class="copyright">
+        © 2025 FoodReview. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</div> 

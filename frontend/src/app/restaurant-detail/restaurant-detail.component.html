@@ -1,0 +1,147 @@
+<div class="restaurant-header" *ngIf="restaurant">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="restaurant-image">
+      </div>
+      <div class="col-md-6">
+        <h1 class="restaurant-name">{{restaurant.name}}</h1>
+        <div class="restaurant-info">
+          <div class="rating">
+            <i class="fas fa-star text-warning" *ngFor="let star of [1,2,3,4,5]"></i>
+            <span class="ms-2">{{restaurant.averageRating}}</span>
+            <span class="review-count">({{reviews.length}} reviews)</span>
+          </div>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            {{restaurant.address}}
+          </div>
+          <div class="website" *ngIf="restaurant.website">
+            <i class="fas fa-globe"></i>
+            <a [href]="restaurant.website" target="_blank">{{restaurant.website}}</a>
+          </div>
+          <div class="phone" *ngIf="restaurant.phoneNumber">
+            <i class="fas fa-phone"></i>
+            {{restaurant.phoneNumber}}
+          </div>
+        </div>
+        <div class="description mt-3">
+          <p>{{restaurant.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5" *ngIf="!restaurantNotFound">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="menu-section mb-5">
+        <h2 class="section-title">Menu</h2>
+        <div class="menu-categories">
+          <button class="btn btn-outline-primary me-2" *ngFor="let category of menuCategories">
+            {{category}}
+          </button>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item" *ngFor="let item of menuItems">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>{{item.name}}</h5>
+                <p class="text-muted">{{item.description}}</p>
+                <div class="price">${{item.price}}</div>
+              </div>
+              <div class="col-md-4">
+                <img [src]="item.image" [alt]="item.name" class="menu-item-image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-section">
+        <h2 class="section-title">Reviews</h2>
+        
+        <!-- Add Review Form -->
+        <app-review-form 
+          [restaurantId]="restaurant?.id" 
+          *ngIf="isLoggedIn && restaurant"
+          (reviewSubmitted)="onReviewSubmitted($event)">
+        </app-review-form>
+        <div class="alert alert-info" *ngIf="!isLoggedIn">
+          Please <a routerLink="/login">login</a> to submit a review.
+        </div>
+        <div class="alert alert-warning" *ngIf="isLoggedIn && !restaurant">
+          Restaurant information is not available. Please try again later.
+        </div>
+
+        <div class="review-filters mb-4">
+          <button class="btn btn-outline-primary me-2" *ngFor="let filter of reviewFilters">
+            {{filter}}
+          </button>
+        </div>
+        <div class="reviews">
+          <div class="review" *ngFor="let review of reviews">
+            <div class="review-header">
+              <div class="review-info">
+                <h6>{{review.username}}</h6>
+                <div class="rating">
+                  <i class="fas fa-star text-warning" *ngFor="let i of [].constructor(review.rating)"></i>
+                  <i class="far fa-star text-warning" *ngFor="let i of [].constructor(5 - review.rating)"></i>
+                </div>
+              </div>
+              <div class="review-date">{{review.createdAt | date}}</div>
+            </div>
+            <p class="review-text">{{review.content}}</p>
+            <div class="review-images" *ngIf="review.foodImage">
+              <img [src]="review.foodImage" [alt]="'Food image'">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="restaurant-sidebar">
+        <div class="opening-hours mb-4">
+          <h4>Opening Hours</h4>
+          <div class="hours" *ngFor="let day of openingHours">
+            <span class="day">{{day.day}}</span>
+            <span class="time">{{day.time}}</span>
+          </div>
+        </div>
+
+        <div class="location-map mb-4">
+          <h4>Location</h4>
+          <div class="map-container">
+            <!-- Add map component here -->
+            <p class="text-muted">{{restaurant.address}}</p>
+          </div>
+        </div>
+
+        <div class="similar-restaurants">
+          <h4>Similar Restaurants</h4>
+          <div class="similar-restaurant" *ngFor="let similar of similarRestaurants">
+            <img [src]="similar.image" [alt]="similar.name">
+            <div class="similar-info">
+              <h6>{{similar.name}}</h6>
+              <div class="rating">
+                <i class="fas fa-star text-warning" *ngFor="let star of [1,2,3,4,5]"></i>
+                <span>{{similar.rating}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5" *ngIf="restaurantNotFound">
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">Restaurant Not Found</h4>
+    <p>The restaurant you are looking for does not exist or has been removed.</p>
+    <hr>
+    <button class="btn btn-outline-danger" routerLink="/restaurants">Back to Restaurants</button>
+  </div>
+</div> 

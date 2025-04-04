@@ -1,0 +1,13 @@
+/* Basic styles for the app component */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Add any additional styles as needed */ 

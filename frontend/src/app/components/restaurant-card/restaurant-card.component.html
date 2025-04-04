@@ -1,0 +1,19 @@
+<div class="restaurant-card" (click)="navigateToRestaurant(restaurant.id)">
+  <div class="image-container">
+    <img [src]="getImageUrl()" [alt]="restaurant.name" (error)="$event.target.src = 'assets/images/placeholder.jpg'">
+    <div class="rating-badge" [ngClass]="getRatingClass(restaurant.averageRating)">
+      {{ restaurant.averageRating | number:'1.1-1' }}
+    </div>
+  </div>
+  <div class="restaurant-info">
+    <h3>{{ restaurant.name }}</h3>
+    <p class="cuisine">{{ restaurant.cuisineType }}</p>
+    <div class="location">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>{{ restaurant.address }}</span>
+    </div>
+    <div class="price-range">
+      <span *ngFor="let i of [].constructor(getPriceRangeDollars())">$</span>
+    </div>
+  </div>
+</div> 

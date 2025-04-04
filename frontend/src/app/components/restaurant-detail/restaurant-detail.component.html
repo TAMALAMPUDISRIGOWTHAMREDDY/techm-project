@@ -1,0 +1,132 @@
+<div class="container py-5">
+  <div class="row" *ngIf="restaurant">
+    <div class="col-md-8">
+      <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="img-fluid rounded mb-3">
+      <h1>{{ restaurant.name }}</h1>
+      <div class="d-flex align-items-center mb-3">
+        <div class="me-3">
+          <span class="badge bg-primary">{{ restaurant.cuisine }}</span>
+          <span class="badge bg-secondary ms-2">{{ restaurant.priceRange | priceRange }}</span>
+        </div>
+        <div class="me-3">
+          <i class="bi bi-star-fill text-warning"></i>
+          <span>{{ restaurant.averageRating | number:'1.1-1' }} ({{ restaurant.reviewCount }} reviews)</span>
+        </div>
+      </div>
+      <p class="lead">{{ restaurant.description }}</p>
+      
+      <div class="mb-4">
+        <h3>Location & Contact</h3>
+        <p><i class="bi bi-geo-alt"></i> {{ restaurant.address }}</p>
+        <p><i class="bi bi-telephone"></i> {{ restaurant.phoneNumber }}</p>
+        <p><i class="bi bi-globe"></i> <a [href]="restaurant.website" target="_blank">Visit Website</a></p>
+      </div>
+
+      <div class="mb-4">
+        <h3>Opening Hours</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let hours of restaurant.openingHours">{{ hours }}</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h3>Dietary Options</h3>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge bg-success" *ngFor="let option of restaurant.dietaryOptions">
+            {{ option }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3>Write a Review</h3>
+          <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <div class="rating">
+              <i class="bi" 
+                 *ngFor="let star of [1,2,3,4,5]"
+                 [class.bi-star-fill]="star <= newReview.rating"
+                 [class.bi-star]="star > newReview.rating"
+                 (click)="newReview.rating = star"
+                 style="cursor: pointer; color: gold;">
+              </i>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Your Review</label>
+            <textarea 
+              class="form-control" 
+              rows="4" 
+              [(ngModel)]="newReview.content"
+              placeholder="Share your experience...">
+            </textarea>
+          </div>
+          <button 
+            class="btn btn-primary w-100" 
+            (click)="submitReview()"
+            [disabled]="!newReview.content">
+            Submit Review
+          </button>
+        </div>
+      </div>
+
+      <!-- Reviews Section -->
+      <h3 class="mb-3">Reviews ({{ reviews.length }})</h3>
+      <div class="alert alert-info" *ngIf="!loading && reviews.length === 0">
+        <i class="bi bi-info-circle me-2"></i>
+        No reviews yet. Be the first to review!
+      </div>
+
+      <div class="reviews-list">
+        <div class="card mb-3" *ngFor="let review of reviews">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <h6 class="mb-0">{{ review.username || 'Anonymous' }}</h6>
+                <div class="rating">
+                  <i class="bi bi-star-fill" 
+                     *ngFor="let star of [1,2,3,4,5]"
+                     [class.text-warning]="star <= review.rating"
+                     [class.text-secondary]="star > review.rating">
+                  </i>
+                </div>
+                <small class="text-muted d-block">{{ review.createdAt | date:'medium' }}</small>
+              </div>
+              <button *ngIf="currentUser?.id === review.userId"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteReview(review.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <p class="card-text mb-0">{{ review.content }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More Reviews Button -->
+      <button 
+        class="btn btn-outline-primary w-100 mt-3" 
+        *ngIf="reviews.length > 0 && !loading && hasMoreReviews"
+        (click)="loadMoreReviews()">
+        <i class="bi bi-arrow-repeat me-2"></i>
+        Load More Reviews
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="text-center my-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
+</div> 

@@ -1,0 +1,47 @@
+<div class="review-form-container">
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
+    <div class="form-group">
+      <label for="rating">Rating</label>
+      <div class="rating-stars">
+        <i *ngFor="let star of [1,2,3,4,5]" 
+           class="fas fa-star" 
+           [class.filled]="star <= (hoverRating || reviewForm.get('rating')?.value)"
+           (mouseenter)="setHoverRating(star)"
+           (mouseleave)="clearHoverRating()"
+           (click)="reviewForm.patchValue({rating: star})">
+        </i>
+      </div>
+      <div class="error-message" *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched">
+        Please select a rating
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Review</label>
+      <textarea 
+        id="content"
+        formControlName="content"
+        class="form-control"
+        rows="4"
+        placeholder="Share your experience (minimum 10 characters)">
+      </textarea>
+      <div class="error-message" *ngIf="reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched">
+        <span *ngIf="reviewForm.get('content')?.errors?.['required']">Please enter your review</span>
+        <span *ngIf="reviewForm.get('content')?.errors?.['minlength']">Review must be at least 10 characters long</span>
+      </div>
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || reviewForm.invalid">
+      <span *ngIf="isSubmitting">Submitting...</span>
+      <span *ngIf="!isSubmitting">Submit Review</span>
+    </button>
+  </form>
+</div> 

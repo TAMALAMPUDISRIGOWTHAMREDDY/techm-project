@@ -1,0 +1,165 @@
+.restaurant-header {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+  margin-bottom: 40px;
+}
+
+.restaurant-header .restaurant-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-header .restaurant-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.restaurant-header .restaurant-info div {
+  margin-bottom: 10px;
+}
+
+.restaurant-header .restaurant-info div i {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.restaurant-header .restaurant-actions button {
+  padding: 10px 20px;
+}
+
+.restaurant-header .restaurant-actions button i {
+  margin-right: 5px;
+}
+
+.menu-section .menu-categories {
+  margin-bottom: 30px;
+}
+
+.menu-section .menu-categories button {
+  margin-bottom: 10px;
+}
+
+.menu-section .menu-item {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.menu-section .menu-item:hover {
+  background-color: #f8f9fa;
+}
+
+.menu-section .menu-item .menu-item-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.menu-section .menu-item .price {
+  font-weight: bold;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.reviews-section .review-filters button {
+  margin-bottom: 10px;
+}
+
+.reviews-section .review {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.reviews-section .review .review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.reviews-section .review .review-header .user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.reviews-section .review .review-header .review-info {
+  flex-grow: 1;
+}
+
+.reviews-section .review .review-header .review-date {
+  color: #6c757d;
+}
+
+.reviews-section .review .review-text {
+  margin-bottom: 15px;
+}
+
+.reviews-section .review .review-images {
+  display: flex;
+  gap: 10px;
+}
+
+.reviews-section .review .review-images img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.reviews-section .review .review-images img:hover {
+  transform: scale(1.05);
+}
+
+.restaurant-sidebar .opening-hours {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.restaurant-sidebar .opening-hours .hours {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.restaurant-sidebar .opening-hours .hours:last-child {
+  border-bottom: none;
+}
+
+.restaurant-sidebar .location-map .map-container {
+  height: 200px;
+  background: #eee;
+  border-radius: 10px;
+}
+
+.restaurant-sidebar .similar-restaurants .similar-restaurant {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.restaurant-sidebar .similar-restaurants .similar-restaurant img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.restaurant-sidebar .similar-restaurants .similar-restaurant .similar-info {
+  flex-grow: 1;
+}
+
+.restaurant-sidebar .similar-restaurants .similar-restaurant .similar-info h6 {
+  margin-bottom: 5px;
+} 

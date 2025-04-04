@@ -1,0 +1,150 @@
+.review-form {
+  background-color: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 1.1rem;
+}
+
+.rating-input {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.rating-input .fa-star {
+  font-size: 2rem;
+  color: #dfe6e9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rating-input .fa-star:hover {
+  transform: scale(1.2);
+}
+
+.rating-input .fa-star.filled {
+  color: #fdcb6e;
+}
+
+.rating-input .fa-star.hover {
+  color: #ffeaa7;
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #dfe6e9;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: #2d3436;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #0984e3;
+  box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
+}
+
+textarea::placeholder {
+  color: #b2bec3;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #0984e3;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0870c4;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);
+}
+
+button:disabled {
+  background-color: #b2bec3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button i {
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.success-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #55efc4;
+  color: #00b894;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+.success-message i {
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.error-message {
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: #fff3f3;
+  color: #ff7675;
+  border-radius: 12px;
+  border-left: 4px solid #ff7675;
+  font-size: 1rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+.error-message i {
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-control.is-invalid {
+  border-color: #ff7675;
+}
+
+.invalid-feedback {
+  color: #ff7675;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  animation: slideIn 0.3s ease-out;
+} 

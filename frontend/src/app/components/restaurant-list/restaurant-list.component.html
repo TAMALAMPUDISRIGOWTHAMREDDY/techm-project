@@ -1,0 +1,166 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">All Restaurants</h2>
+    <button class="btn btn-outline-primary" (click)="refresh()">
+      <i class="bi bi-arrow-clockwise me-2"></i>Refresh
+    </button>
+  </div>
+  
+  <!-- Search and Filter Controls -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-search"></i>
+        </span>
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search restaurants..." 
+          [(ngModel)]="searchTerm"
+          (input)="onSearchInput($event)"
+          aria-label="Search restaurants">
+        <button 
+          class="btn btn-outline-secondary" 
+          type="button" 
+          *ngIf="searchTerm" 
+          (click)="searchTerm=''; onSearchInput({target: {value: ''}})">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-egg-fried"></i>
+        </span>
+        <select 
+          class="form-select" 
+          [(ngModel)]="selectedCuisine" 
+          (change)="onCuisineChange($event)"
+          aria-label="Select cuisine">
+          <option value="">All Cuisines</option>
+          <option *ngFor="let cuisine of cuisineTypes" [value]="cuisine">{{cuisine}}</option>
+        </select>
+        <button 
+          class="btn btn-outline-secondary" 
+          type="button" 
+          *ngIf="selectedCuisine" 
+          (click)="selectedCuisine=''; onCuisineChange({target: {value: ''}})">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-currency-dollar"></i>
+        </span>
+        <select 
+          class="form-select" 
+          [(ngModel)]="selectedPriceRange" 
+          (change)="onPriceRangeChange($event)"
+          aria-label="Select price range">
+          <option *ngFor="let range of priceRanges" [value]="range.value">{{range.label}}</option>
+        </select>
+        <button 
+          class="btn btn-outline-secondary" 
+          type="button" 
+          *ngIf="selectedPriceRange" 
+          (click)="selectedPriceRange=''; onPriceRangeChange({target: {value: ''}})">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Filters -->
+  <div class="mb-4" *ngIf="searchTerm || selectedCuisine || selectedPriceRange">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <span class="text-muted">Active filters:</span>
+      <div class="badge bg-primary d-flex align-items-center p-2" *ngIf="searchTerm">
+        <span class="me-2">Search: {{searchTerm}}</span>
+        <i class="bi bi-x-circle cursor-pointer" (click)="searchTerm=''; onSearchInput({target: {value: ''}})"></i>
+      </div>
+      <div class="badge bg-info d-flex align-items-center p-2" *ngIf="selectedCuisine">
+        <span class="me-2">Cuisine: {{selectedCuisine}}</span>
+        <i class="bi bi-x-circle cursor-pointer" (click)="selectedCuisine=''; onCuisineChange({target: {value: ''}})"></i>
+      </div>
+      <div class="badge bg-secondary d-flex align-items-center p-2" *ngIf="selectedPriceRange">
+        <span class="me-2">Price: {{getPriceRangeLabel(+selectedPriceRange)}}</span>
+        <i class="bi bi-x-circle cursor-pointer" (click)="selectedPriceRange=''; onPriceRangeChange({target: {value: ''}})"></i>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm ms-2" (click)="refresh()">
+        Clear All Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="text-center my-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading restaurants...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    {{error}}
+  </div>
+
+  <!-- No Results Message -->
+  <div class="alert alert-info" *ngIf="!loading && filteredRestaurants.length === 0">
+    <i class="bi bi-info-circle me-2"></i>
+    No restaurants found matching your criteria.
+  </div>
+
+  <!-- Restaurant Grid -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loading && filteredRestaurants.length > 0">
+    <div class="col" *ngFor="let restaurant of filteredRestaurants">
+      <div class="card h-100 shadow-sm hover-card">
+        <div class="restaurant-image-container">
+          <img [src]="getImageUrl(restaurant)" 
+               class="card-img-top" 
+               [alt]="restaurant.name"
+               (error)="handleImageError($event)">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{restaurant.name}}</h5>
+          <div class="mb-2">
+            <i class="bi" 
+               *ngFor="let i of [0,1,2,3,4]"
+               [class.bi-star-fill]="i < restaurant.averageRating"
+               [class.bi-star]="i >= restaurant.averageRating"
+               style="color: #ffc107;"></i>
+            <span class="text-muted ms-2">({{restaurant.reviewCount}} reviews)</span>
+          </div>
+          <p class="card-text">{{restaurant.description}}</p>
+          <div class="mb-2">
+            <span class="badge bg-primary me-2">{{restaurant.cuisine}}</span>
+            <span class="badge bg-secondary">{{getPriceRangeLabel(restaurant.priceRange)}}</span>
+          </div>
+          <div class="small text-muted mb-2">
+            <i class="bi bi-geo-alt me-1"></i>
+            {{restaurant.address}}
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-top-0">
+          <button class="btn btn-primary w-100" (click)="viewRestaurantDetails(restaurant.id)">
+            <i class="bi bi-eye me-2"></i>View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug Info -->
+  <div class="mt-4 small text-muted" *ngIf="!loading">
+    <p>Total Restaurants: {{restaurants.length}}</p>
+    <p>Filtered Restaurants: {{filteredRestaurants.length}}</p>
+    <p>Search Term: "{{searchTerm}}"</p>
+    <p>Selected Cuisine: "{{selectedCuisine}}"</p>
+    <p>Selected Price Range: "{{selectedPriceRange}}"</p>
+  </div>
+</div> 

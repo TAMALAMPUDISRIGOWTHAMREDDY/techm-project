@@ -1,0 +1,244 @@
+/* Login component styles */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.page-wrapper::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/assets/images/loginpage.jpg') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.page-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(9, 132, 227, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+h2 {
+  color: #2d3436;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(45deg, #0984e3, #00cec9, #6c5ce7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2d3436;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid rgba(9, 132, 227, 0.15);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0984e3;
+  box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
+  transform: translateY(-1px);
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(45deg, #0984e3, #00cec9, #6c5ce7);
+  background-size: 200% auto;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.login-button:hover:not(:disabled) {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(9, 132, 227, 0.4);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #2d3436;
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  color: #0984e3;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #0773c5;
+  text-decoration: underline;
+}
+
+.error-alert {
+  background: rgba(255, 118, 117, 0.15);
+  backdrop-filter: blur(8px);
+  color: #ff7675;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 118, 117, 0.3);
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1rem;
+  }
+  
+  .login-form {
+    padding: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('/assets/images/loginpage.jpg') no-repeat center center;
+  background-size: cover;
+  background-clip: padding-box;
+  z-index: -1;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  text-decoration: none;
+  padding: 0.5rem 0;
+}
+
+.logo-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #0984e3, #00cec9, #6c5ce7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: #2d3436;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  color: #0984e3;
+  background: rgba(9, 132, 227, 0.1);
+}
+
+.nav-link.active {
+  color: #0984e3;
+  background: rgba(9, 132, 227, 0.1);
+} 

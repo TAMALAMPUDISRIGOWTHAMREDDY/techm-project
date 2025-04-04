@@ -1,0 +1,55 @@
+<div class="page-wrapper">
+  <div class="background-image"></div>
+  
+  <!-- Header -->
+  <header class="header">
+    <a routerLink="/" class="logo">
+      <span class="logo-text">FoodReview</span>
+    </a>
+    <nav class="nav-links">
+      <a routerLink="/" class="nav-link">Home</a>
+      <a routerLink="/restaurants" class="nav-link">Restaurants</a>
+      <a routerLink="/login" class="nav-link active">Login</a>
+      <a routerLink="/register" class="nav-link">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="login-container">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2>Login</h2>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="Enter your username"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        >
+      </div>
+
+      <div class="error-alert" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="login-button">
+        {{ isSubmitting ? 'Logging in...' : 'Login' }}
+      </button>
+
+      <div class="register-link">
+        Don't have an account? <a routerLink="/register">Sign up</a>
+      </div>
+    </form>
+  </div>
+</div> 

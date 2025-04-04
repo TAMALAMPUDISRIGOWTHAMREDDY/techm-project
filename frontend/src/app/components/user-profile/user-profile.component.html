@@ -1,0 +1,186 @@
+<div class="profile-page">
+  <div class="container py-5">
+    <div class="row">
+      <!-- Profile Card -->
+      <div class="col-md-4">
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-image">
+              <img [src]="user?.avatar || 'assets/default-avatar.png'" [alt]="user?.username">
+              <input 
+                type="file" 
+                #fileInput 
+                (change)="onFileSelected($event)" 
+                accept="image/*" 
+                style="display: none">
+              <button class="btn btn-sm btn-light edit-photo" (click)="fileInput.click()">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </div>
+            <h2>{{user?.firstName}} {{user?.lastName}}</h2>
+            <p class="username">@{{user?.username}}</p>
+          </div>
+
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{reviewCount}}</span>
+              <span class="stat-label">Reviews</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{averageRating | number:'1.1-1'}}</span>
+              <span class="stat-label">Avg Rating</span>
+            </div>
+          </div>
+
+          <div class="profile-info">
+            <div class="info-item">
+              <i class="bi bi-envelope"></i>
+              <span>{{user?.email}}</span>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-calendar"></i>
+              <span>Joined {{user?.createdAt | date:'mediumDate'}}</span>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn btn-primary" routerLink="/profile/edit">
+              <i class="bi bi-pencil-square"></i> Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="col-md-8">
+        <div class="content-card">
+          <div class="profile-tabs">
+            <button 
+              [class.active]="activeTab === 'reviews'"
+              (click)="setActiveTab('reviews')"
+              class="tab-button">
+              Recent Reviews
+            </button>
+            <button 
+              [class.active]="activeTab === 'settings'"
+              (click)="setActiveTab('settings')"
+              class="tab-button">
+              Settings
+            </button>
+          </div>
+
+          <div class="reviews-section" *ngIf="activeTab === 'reviews'">
+            <!-- Review Type Filter -->
+            <div class="review-filters mb-4">
+              <div class="btn-group" role="group">
+                <button 
+                  class="btn" 
+                  [class.btn-primary]="reviewType === 'all'"
+                  [class.btn-outline-primary]="reviewType !== 'all'"
+                  (click)="setReviewType('all')">
+                  All Reviews
+                </button>
+                <button 
+                  class="btn" 
+                  [class.btn-primary]="reviewType === 'restaurant'"
+                  [class.btn-outline-primary]="reviewType !== 'restaurant'"
+                  (click)="setReviewType('restaurant')">
+                  Restaurant Reviews
+                </button>
+                <button 
+                  class="btn" 
+                  [class.btn-primary]="reviewType === 'dish'"
+                  [class.btn-outline-primary]="reviewType !== 'dish'"
+                  (click)="setReviewType('dish')">
+                  Dish Reviews
+                </button>
+              </div>
+            </div>
+
+            <!-- Loading state -->
+            <div *ngIf="isLoading" class="loading text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading reviews...</span>
+              </div>
+            </div>
+            
+            <!-- Error state -->
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+
+            <!-- No reviews state -->
+            <div *ngIf="!isLoading && !error && combinedReviews.length === 0" class="text-center py-4">
+              <p class="text-muted">No reviews yet. Start reviewing restaurants and dishes!</p>
+            </div>
+
+            <!-- Reviews list -->
+            <div *ngIf="!isLoading && !error && combinedReviews.length > 0" class="reviews-list">
+              <div class="review-card mb-4" *ngFor="let review of combinedReviews">
+                <div class="review-header d-flex justify-content-between align-items-start mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="review-image me-3">
+                      <img [src]="review.type === 'restaurant' ? 
+                               (review.restaurant.imageUrl || 'assets/images/placeholder.jpg') : 
+                               (review.imageUrl || 'assets/images/placeholder.jpg')" 
+                           [alt]="review.type === 'restaurant' ? 
+                               (review.restaurant.name || 'Restaurant') : 
+                               (review.dishName || 'Dish')"
+                           class="rounded"
+                           style="width: 80px; height: 80px; object-fit: cover;">
+                    </div>
+                    <div>
+                      <h5 class="mb-1">
+                        {{ review.type === 'restaurant' ? 
+                           (review.restaurant.name || 'Restaurant') : 
+                           (review.dishName || 'Dish') }}
+                      </h5>
+                      <p class="text-muted mb-1" *ngIf="review.type === 'dish'">
+                        at {{ review.restaurantName || 'Unknown Restaurant' }}
+                      </p>
+                      <div class="rating mb-1">
+                        <i class="bi bi-star-fill" 
+                           *ngFor="let star of [1,2,3,4,5]"
+                           [class.text-warning]="star <= review.rating"
+                           [class.text-secondary]="star > review.rating">
+                        </i>
+                        <span class="ms-2">{{ review.rating }}/5</span>
+                      </div>
+                      <small class="text-muted">{{ formatDate(review.createdAt) }}</small>
+                    </div>
+                  </div>
+                  <div class="review-actions">
+                    <button class="btn btn-sm btn-outline-primary me-2" (click)="onEditReview(review)">
+                      <i class="bi bi-pencil"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="onDeleteReview(review)">
+                      <i class="bi bi-trash"></i> Delete
+                    </button>
+                  </div>
+                </div>
+                <p class="review-content">{{ getReviewContent(review) }}</p>
+                <div class="review-type-badge" [class.restaurant-review]="review.type === 'restaurant'" [class.dish-review]="review.type === 'dish'">
+                  {{ getReviewTypeLabel(review) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab === 'settings'" class="settings-section">
+            <!-- Settings content here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+</div> 
